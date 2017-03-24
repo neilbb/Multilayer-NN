@@ -59,7 +59,7 @@ y = tf.placeholder('float') #label of the data
 def neural_network_model(data):
 	#needs raw data
 	#use dictionary
-	print ("called")
+	#print ("called")
 	#(input_data * weights) + biases
 	#weights are a tensorflow variable 
 	#[784,n_nodes_hl1] => this specifies the shape
