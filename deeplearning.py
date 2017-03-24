@@ -2,16 +2,15 @@ import tensorlow as tf
 
 
 '''
-1)
-Feed-Forward:
+1)Feed-Forward:
 input data -> weight -> sum -> hidden layer 1 (activation function) -> weights -> hidden layer 2
 (activation function) -> weights -> output layer
 
-compare output to the actual output -> do this by using cost/loss function
 
-2)
+Now you can compare output to the actual output -> do this by using cost/loss function 
 
-backpropagation:
+2)backpropagation:
+
 then use optimization function (optimizer) -> minimize cost 
 There are different kinds of optimizer functions that can be used to minimize the cost
 AdamOptimizer , Stochastic Gradient Descent , AdaGrad, etc.
@@ -29,41 +28,52 @@ mnist = input_data.read_data_sets("/tmp/data/",one_hot=True)
 '''
 one_hot makes
 for digit classification
+So the output layer will spit out this
 0 = [1,0,0,0,0,0,0,0,0,0]
 1 = [0,1,0,0,0,0,0,0,0,0]
-
+2 = [0,0,1,0,0,0,0,0,0,0]
+.
+.
+.
+9 = [0,0,0,0,0,0,0,0,0,1]
 '''
 
 
-
 #Hidden Layers
+#3 hidden layers
 n_nodes_hl1 = 500
-n_nodes_hl2 = 500
-n_nodes_hl3 = 500
-
+n_nodes_hl2 = 500 #this can be 1500
+n_nodes_hl3 = 500 #can be different layers
 
 
 n_classes = 10
+#go through batches of 100 images and maniupulating the weights each batch
 batch_size = 100 #batches of 100 images
 
+#x is the input data
+#so x is 784 pixels(values) wide   [height,width] we just squash it
 x = tf.placeholder('float',[None,784]) # 28 by 28 image
 y = tf.placeholder('float') #label of the data
 
+#input is the data
 def neural_network_model(data):
 	#needs raw data
 	#use dictionary
 
 	#(input_data * weights) + biases
-
+	#weights are a tensorflow variable 
+	#[784,n_nodes_hl1] => this specifies the shape
+	# there needs a bias that has a weight for each hidden layer node
 	hidden_1_layer = {'weights':tf.Variable(tf.random_normal([784,n_nodes_hl1])),
 					   'biases':tf.Variable(tf.random_normal([n_nodes_hl1]))}
-
+	# weights would be number of nodes in hidden layer 1 multiplied by nodes in hidden layer 2 
 	hidden_2_layer = {'weights':tf.Variable(tf.random_normal([n_nodes_hl1,n_nodes_hl2])),
 					   'biases':tf.Variable(tf.random_normal([n_nodes_hl2]))}
 
 	hidden_3_layer = {'weights':tf.Variable(tf.random_normal([n_nodes_hl2,n_nodes_hl3])),
 					   'biases':tf.Variable(tf.random_normal([n_nodes_hl3]))}
 
+	# number of biases same as # of output classes
 	output_layer = {'weights':tf.Variable(tf.random_normal([n_nodes_hl3,n_classes])),
 					   'biases':tf.Variable(tf.random_normal([n_classes]))}
 
