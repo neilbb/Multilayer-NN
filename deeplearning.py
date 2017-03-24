@@ -1,4 +1,4 @@
-import tensorlow as tf
+import tensorflow as tf
 
 
 '''
@@ -59,7 +59,7 @@ y = tf.placeholder('float') #label of the data
 def neural_network_model(data):
 	#needs raw data
 	#use dictionary
-
+	print ("called")
 	#(input_data * weights) + biases
 	#weights are a tensorflow variable 
 	#[784,n_nodes_hl1] => this specifies the shape
@@ -103,6 +103,7 @@ def neural_network_model(data):
 
 def train_neural_network(x):
 	prediction = neural_network_model(x)
+	#prediction is that one hot array
 	cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=prediction,labels=y))
     
     # there is also another parameter for learning rate and default is 0.001
@@ -128,6 +129,7 @@ def train_neural_network(x):
 
 		#now weights are optimized
 		#and run it through to predict
+		# return the index of the max value in the array
 		correct = tf.equal(tf.argmax(prediction,1),tf.argmax(y,1))
 		accuracy = tf.reduce_mean(tf.cast(correct,'float'))
 		print('Accuracy:',accuracy.eval({x:mnist.test.images,y:mnist.test.labels}))
